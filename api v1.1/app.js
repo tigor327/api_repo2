@@ -13,10 +13,10 @@ const validateToken = require("./src/middleware/tokenValidation/tokenAuthenticat
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
-
 app.use("/customers/list", validateToken, customerRoute);
 app.use("/suppliers/list", supplierRoute);
 app.use("/items/list", itemRoute);
@@ -28,14 +28,14 @@ app.use(async (req, res) => {
   res.status(404).send("Route unavailable.");
 });
 
-app.use(
-  "/user/:id",
-  function(req, res, next) {
-    console.log("Request URL:", req.originalUrl);
-    next();
-  },
-  function(req, res, next) {
-    console.log("Request Type:", req.method);
-    next();
-  }
-);
+// app.use(
+//   "/user/:id",
+//   function(req, res, next) {
+//     console.log("Request URL:", req.originalUrl);
+//     next();
+//   },
+//   function(req, res, next) {
+//     console.log("Request Type:", req.method);
+//     next();
+//   }
+// );

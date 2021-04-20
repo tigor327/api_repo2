@@ -9,7 +9,7 @@ const listDeliveryTransactions = ({ deliveryTransactionsDb }) => {
     for (var i = 0; i < result.rowCount; i++) {
       var row = results[i];
       var id = row.transactionid;
-      let items = [];
+      let itemsListRows = [];
       var itemsList = await deliveryTransactionsDb.getAllDeliveryByIdTransactions(
         {
           id,
@@ -18,7 +18,7 @@ const listDeliveryTransactions = ({ deliveryTransactionsDb }) => {
 
       var itemsList = itemsList.rows;
       for (var n = 0; n < itemsList.length; n++) {
-        items.push({
+        itemsListRows.push({
           id: itemsList[n].itemid,
           quantity: itemsList[n].itemQuantity,
           deliveryTransactionsId: itemsList[n].transactionid,
@@ -40,7 +40,7 @@ const listDeliveryTransactions = ({ deliveryTransactionsDb }) => {
         supContact: row.userContact,
         supAddress: row.userAddress,
         supStatus: row.userStatus,
-        items,
+        itemsListRows,
       });
 
       //transaction.push(itemsListRows);

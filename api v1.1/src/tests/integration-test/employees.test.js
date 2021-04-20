@@ -14,19 +14,17 @@ describe(`Tests Suites`, () => {
   });
 
   let server;
-  beforeAll(() => {
-    app.listen(port);
-  });
+  beforeAll(() => {});
 
-  afterAll((done) => {
-    app.close(done);
-  });
+  afterAll((done) => {});
 
   describe("customer routes test", () => {
     itemRoute("can list customers", async () => {
       await request(app)
         .get("/customers/list")
         .expect(200);
+
+      done();
     });
   });
   test(`Select Customers`, async () => {

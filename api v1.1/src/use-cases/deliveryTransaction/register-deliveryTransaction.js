@@ -26,15 +26,44 @@ const registerDeliveryTransaction = ({
       deliveryDate: deliveryDate,
     };
 
-    const res = await deliveryTransactionsDb.addDeliveryTransaction({ data });
+    const result = await deliveryTransactionsDb.addDeliveryTransaction({
+      data,
+    });
+    let finalResult = [];
+    finalResult.push([
+      {
+        deliveryTransactionId: result.finalResult[0][0].transactionid,
+      },
+    ]);
+    const itemsList = result.finalResult[1];
+    console.log(
+      "result from await",
+      result.finalResult[0][0].transactionid,
+      "loop number: ",
+      n
+    );
 
-    let prompt = res
+    for (var n = 0; n < itemsList.length; n++) {
+      finalResult.push(itemsList[n]);
+      n += 1;
+
+      finalResult.push([
+        {
+          id: itemsList[n][0].itemid,
+          name: itemsList[n][0].itemName,
+          price: itemsList[n][0].itemPrice,
+          quantity: itemsList[n][0].itemQuantity,
+          subtotal: itemsList[n][0].subTotal,
+        },
+      ]);
+    }
+    let prompt = result
       ? "DeliveryTransaction registered succesfully!"
       : "Failed to register deliveryTransaction.";
 
     return {
       message: prompt,
-      product: res,
+      product: { finalResult },
     };
   };
 };

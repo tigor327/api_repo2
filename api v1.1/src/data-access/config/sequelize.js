@@ -38,14 +38,34 @@ require("dotenv").config();
 // 	}
 // }
 
-module.exports = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+let connection;
 
-  {
-    host: process.env.DB_HOST,
-    dialect: "postgres",
-    omitNull: true,
-  }
-);
+let env = process.env.NODE_ENV;
+
+if (env == "development") {
+  module.exports = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
+    {
+      host: process.env.DB_HOST,
+      dialect: "postgres",
+      omitNull: true,
+    }
+  );
+  console.log("You're using development connection");
+}
+
+if (env == "test") {
+  module.exports = new Sequelize(
+    process.env.TESTDB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
+    {
+      host: process.env.DB_HOST,
+      dialect: "postgres",
+      omitNull: true,
+    }
+  );
+  console.log("You're using test connection");
+}

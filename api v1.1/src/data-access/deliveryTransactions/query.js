@@ -67,6 +67,8 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
   }
 
   async function addDeliveryTransaction({ data }) {
+    var items = [];
+    var transactionId = [];
     var finalResult = [];
     try {
       const pool = await connects();
@@ -89,7 +91,7 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
           resolve(res);
         });
       });
-      finalResult.push(result.rows);
+      transactionId.push(result.rows);
 
       //add items delivered to itemDeliveries table
       try {
@@ -110,7 +112,8 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
               resolve(res);
             });
           });
-          finalResult.push(result1.command, result1.rows);
+
+          items.push(result1.command, result1.rows);
 
           try {
             //Update the item quantity in item table according to how much of an item is delivered
@@ -124,7 +127,8 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
                 resolve(res);
               });
             });
-            finalResult.push(result2.command, result2.rows);
+
+            items.push(result2.command, result2.rows);
           } catch (e) {
             console.log("Error: ", e);
           }
@@ -133,7 +137,10 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
       } catch (e) {
         console.log("Error: ", e);
       }
-      console.log(finalResult);
+      console.log("print transaction id: ", transactionId[0]);
+      finalResult.push(transactionId[0]);
+      finalResult.push(items);
+
       return { finalResult };
     } catch (e) {
       console.log("Error: ", e);

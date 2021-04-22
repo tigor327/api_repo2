@@ -2,10 +2,9 @@ const isValidName = require("../../helper/isValidName");
 
 const update = ({ info }) => {
   //return function make(id, {fullname, contact, address} = {})
-
   const { supName, supContact, supAddress, id } = info;
   const fname = isValidName(supName);
-  const supStatus = "Inactive";
+  const supStatus = "Active";
 
   if (!id) {
     throw new Error("Invalid supplier id");
@@ -23,12 +22,12 @@ const update = ({ info }) => {
     throw new Error("Invalid chars aren't allowed as name");
   }
 
-  return Object.freeze({
-    supName: () => supName,
-    supContact: () => supContact,
-    supAddress: () => supAddress,
-    supStatus: () => supStatus,
-  });
+  // return Object.freeze({
+  //   supName: () => supName,
+  //   supContact: () => supContact,
+  //   supAddress: () => supAddress,
+  //   supStatus: () => supStatus,
+  // });
 };
 
 module.exports = update;

@@ -10,13 +10,17 @@ const login = ({ loginDb, makeLogin_ENTITY }) => {
     };
 
     const res = await loginDb.getLogin({ data });
-    console.log("resultttttsststststs");
+    console.log("resultttttsststststs: ", res);
     if (res.rows.length == 1) {
       token = jwt.sign(res.rows[0].userName, config.development.JWTSecret);
     }
 
-    let prompt =
-      res.rows.length == 1 ? "Login succesfully!" : "Failed to login.";
+    let prompt;
+    if (res.rows.length == 1) {
+      promt = "Login succesfully!";
+    } else {
+      throw new Error("Failed to login. incorect username or password");
+    }
     if (res.rows.length == 1) {
       return {
         message: prompt,
@@ -26,7 +30,6 @@ const login = ({ loginDb, makeLogin_ENTITY }) => {
     } else {
       return {
         message: prompt,
-        result: res,
       };
     }
   };

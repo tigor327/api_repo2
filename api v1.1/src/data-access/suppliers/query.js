@@ -66,7 +66,7 @@ const supplierQuery = ({ connects, model }) => {
     try {
       let result1 = await getSupplierById({ data });
 
-      if (result1) {
+      if (result1.rowCount > 0) {
         try {
           const Supplier = model.SupplierModel;
           const result = await Supplier.update(

@@ -1,7 +1,6 @@
 const makeLogin = ({ info }) => {
   // return function make({fullname, contact, address} = {}) {
   const { userName, password } = info;
-
   if (!userName) {
     throw new Error("Please enter username");
   }

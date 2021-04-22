@@ -5,7 +5,6 @@ const salesTransactionsQuery = ({ connects, model }) => {
     getAllSalesTransactions,
     getAllSalesByIdTransactions,
     updateSalesTransaction,
-    checkDupe,
   });
 
   async function getAllSalesTransactions({}) {
@@ -72,44 +71,29 @@ const salesTransactionsQuery = ({ connects, model }) => {
             data.transactionTotal,
           ];
 
-          pool.query(sql, params, (err, res) => {
+          pool.query(sql, params, (error, res) => {
             pool.end();
-            if (err) resolve(err);
+            if (error) resolve(error);
             resolve(res);
           });
         });
+        if (result.rows) {
+          console.log("hmmmmmmm: ", result.rows);
+          finalResult.push(result.rows);
 
-        finalResult.push(result.rows);
+          //add itemSales data
+          try {
+            const pool = await connects();
+            for (var i = 0; i < data.items.length; i++) {
+              const result1 = await new Promise((resolve) => {
+                const sql = `INSERT INTO "transactionItems" ( itemid, "itemQuantity", transactionid, "subTotal") VALUES ($1, $2, $3, $4) RETURNING itemid, "itemQuantity", "subTotal"`;
+                let params = [
+                  data.items[i].id,
+                  data.items[i].selectedQuantity,
+                  result.rows[0].transactionid,
+                  data.items[i].subTotal,
+                ];
 
-        //add itemSales data
-        try {
-          const pool = await connects();
-          for (var i = 0; i < data.items.length; i++) {
-            const result1 = await new Promise((resolve) => {
-              const sql = `INSERT INTO "transactionItems" ( itemid, "itemQuantity", transactionid, "subTotal") VALUES ($1, $2, $3, $4) RETURNING itemid, "itemQuantity", "subTotal"`;
-              let params = [
-                data.items[i].id,
-                data.items[i].selectedQuantity,
-                result.rows[0].transactionid,
-                data.items[i].subTotal,
-              ];
-
-              pool.query(sql, params, (err, res) => {
-                //pool.end();
-                if (err) resolve(err);
-                resolve(res);
-              });
-            });
-
-            finalResult.push(result1.command, result1.rows);
-
-            try {
-              //Update item Quantity
-              const pool = await connects();
-              const result2 = await new Promise((resolve) => {
-                const sql = `UPDATE "items" SET "itemQuantity" = "itemQuantity" - $1 WHERE itemid = $2 RETURNING "itemName", "itemPrice", "itemQuantity"`;
-
-                let params = [data.items[i].selectedQuantity, data.items[i].id];
                 pool.query(sql, params, (err, res) => {
                   //pool.end();
                   if (err) resolve(err);
@@ -117,14 +101,35 @@ const salesTransactionsQuery = ({ connects, model }) => {
                 });
               });
 
-              finalResult.push(result2.command, result2.rows);
-            } catch (e) {
-              console.log("Error: ", e);
+              finalResult.push(result1.command, result1.rows);
+
+              try {
+                //Update item Quantity
+                const pool = await connects();
+                const result2 = await new Promise((resolve) => {
+                  const sql = `UPDATE "items" SET "itemQuantity" = "itemQuantity" - $1 WHERE itemid = $2 RETURNING "itemName", "itemPrice", "itemQuantity"`;
+
+                  let params = [
+                    data.items[i].selectedQuantity,
+                    data.items[i].id,
+                  ];
+                  pool.query(sql, params, (err, res) => {
+                    //pool.end();
+                    if (err) resolve(err);
+                    resolve(res);
+                  });
+                });
+
+                finalResult.push(result2.command, result2.rows);
+              } catch (e) {
+                console.log("Error: ", e);
+              }
             }
+          } catch (e) {
+            console.log("Error: ", e);
           }
-          //return { result };
-        } catch (e) {
-          console.log("Error: ", e);
+        } else {
+          throw new Error("Failed to update salesTransaction.");
         }
       } catch (e) {
         console.log("Error: ", e);
@@ -175,113 +180,100 @@ const salesTransactionsQuery = ({ connects, model }) => {
     }
   }
 
-  async function checkDupe({ data }) {
-    try {
-      const pool = await connects();
-
-      const result = await new Promise((resolve) => {
-        const sql = `SELECT * FROM salesTransactions WHERE "name" = $1`;
-        let params = [data.name];
-
-        pool.query(sql, params, (err, res) => {
-          pool.end();
-
-          if (err) resolve(err);
-          resolve(res);
-        });
-      });
-      return result;
-    } catch (e) {
-      console.log("Error: ", e);
-    }
-  }
   async function updateSalesTransaction({ data }) {
     var finalResult = [];
+    var id = data.id;
     try {
-      let id = await getId({ data });
+      let existingTransaction = await getAllSalesByIdTransactions({ id });
+      console.log(
+        "############################################: ",
+        existingTransaction
+      );
+      if (existingTransaction.rowCount > 0) {
+        let id = await getId({ data });
 
-      const pool = await connects();
-      const result = await new Promise((resolve) => {
-        let sql = `UPDATE "transactions" SET "userid" = $2, "transactionDate" = $3, "grandTotal" = $4  WHERE "transactionid" = $1`;
-        let params = [data.id, id, data.dateAndTime, data.transactionTotal];
+        const pool = await connects();
+        const result = await new Promise((resolve) => {
+          let sql = `UPDATE "transactions" SET "userid" = $2, "transactionDate" = $3, "grandTotal" = $4  WHERE "transactionid" = $1`;
+          let params = [data.id, id, data.dateAndTime, data.transactionTotal];
 
-        pool.query(sql, params, (err, res) => {
-          pool.end();
+          pool.query(sql, params, (err, res) => {
+            pool.end();
 
-          if (err) resolve(err);
-          resolve(res);
+            if (err) resolve(err);
+            resolve(res);
+          });
         });
-      });
+      } else {
+        throw new Error("Transaction Does Not Exist!");
+      }
+      try {
+        const pool = await connects();
 
-      if (result) {
-        try {
-          const pool = await connects();
+        for (var i = 0; i < data.items.length; i++) {
+          const result1 = await new Promise((resolve) => {
+            const sql = `UPDATE "transactionItems" SET "itemQuantity" = "itemQuantity" - $2, "subTotal" = $4 WHERE itemid = $1 AND "transactionid" = $3 returning "itemQuantity"`;
 
-          for (var i = 0; i < data.items.length; i++) {
-            const result1 = await new Promise((resolve) => {
-              const sql = `UPDATE "transactionItems" SET "itemQuantity" = "itemQuantity" - $2, "subTotal" = $4 WHERE itemid = $1 AND "transactionid" = $3 returning "itemQuantity"`;
+            let params = [
+              data.items[i].id,
+              data.items[i].selectedQuantity,
+              data.id,
+              data.items[i].subTotal,
+            ];
 
-              let params = [
-                data.items[i].id,
-                data.items[i].selectedQuantity,
-                data.id,
-                data.items[i].subTotal,
-              ];
+            pool.query(sql, params, (err, res) => {
+              //pool.end();
+              if (err) resolve(err);
+              resolve(res);
+            });
+          });
 
+          finalResult.push(result1.command, result1.rows);
+
+          try {
+            //Update the item quantity in item table according to how much of an item is delivered
+            const pool = await connects();
+            const result2 = await new Promise((resolve) => {
+              const sql = `UPDATE "items" SET "itemQuantity" = "itemQuantity" - $1 WHERE itemid = $2 RETURNING "itemName", "itemPrice", "itemQuantity"`;
+
+              let params = [result1.rows[0].itemQuantity, data.items[i].id];
               pool.query(sql, params, (err, res) => {
                 //pool.end();
                 if (err) resolve(err);
                 resolve(res);
               });
             });
-
-            finalResult.push(result1.command, result1.rows);
-
+            finalResult.push(result2.command, result2.rows);
             try {
-              //Update the item quantity in item table according to how much of an item is delivered
-              const pool = await connects();
-              const result2 = await new Promise((resolve) => {
-                const sql = `UPDATE "items" SET "itemQuantity" = "itemQuantity" - $1 WHERE itemid = $2 RETURNING "itemName", "itemPrice", "itemQuantity"`;
+              const result3 = await new Promise((resolve) => {
+                const sql = `UPDATE "transactionItems" SET "itemQuantity" = $2, "subTotal" = $4 WHERE itemid = $1 AND "transactionid" = $3 RETURNING itemid, "itemQuantity"`;
 
-                let params = [result1.rows[0].itemQuantity, data.items[i].id];
+                let params = [
+                  data.items[i].id,
+                  data.items[i].selectedQuantity,
+                  data.id,
+                  data.items[i].subTotal,
+                ];
+
                 pool.query(sql, params, (err, res) => {
                   //pool.end();
                   if (err) resolve(err);
                   resolve(res);
                 });
               });
-              finalResult.push(result2.command, result2.rows);
-              try {
-                const result3 = await new Promise((resolve) => {
-                  const sql = `UPDATE "transactionItems" SET "itemQuantity" = $2, "subTotal" = $4 WHERE itemid = $1 AND "transactionid" = $3 RETURNING itemid, "itemQuantity"`;
 
-                  let params = [
-                    data.items[i].id,
-                    data.items[i].selectedQuantity,
-                    data.id,
-                    data.items[i].subTotal,
-                  ];
-
-                  pool.query(sql, params, (err, res) => {
-                    //pool.end();
-                    if (err) resolve(err);
-                    resolve(res);
-                  });
-                });
-
-                finalResult.push(result3.command, result3.rows);
-              } catch (e) {
-                console.log("Error: ", e);
-              }
+              finalResult.push(result3.command, result3.rows);
             } catch (e) {
               console.log("Error: ", e);
             }
+          } catch (e) {
+            console.log("Error: ", e);
           }
-
-          return { finalResult };
-        } catch (e) {
-          console.log("Error: ", e);
         }
+
+        return { finalResult };
+      } catch (e) {
+        console.log("Error: ", e);
       }
     } catch (e) {
       console.log("Error: ", e);

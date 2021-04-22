@@ -35,21 +35,3 @@ const salesTransactionRoutes = ({
 };
 
 module.exports = salesTransactionRoutes;
-
-function auth(req, res, next) {
-  try {
-    console.log("try Initiated");
-    const bearerHeader = req.headers["authorization"];
-    if (typeof bearerHeader !== "undefined") {
-      const bearer = bearerHeader.split(" ");
-      const bearerToken = bearer[1];
-      req.token = bearerToken;
-      next();
-    } else {
-      throw new Error("Forbidden access");
-    }
-  } catch (e) {
-    res.sendStatus(403);
-    console.log("Error: ", e);
-  }
-}

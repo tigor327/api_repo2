@@ -11,6 +11,7 @@ const updateSupplier = ({ suppliersDb, updateSupplier_ENTITY }) => {
     };
 
     const res = await suppliersDb.updateSupplier({ data });
+
     if (res) {
       result.supid = res[0].userid;
       result.supName = res[0].userName;
@@ -22,7 +23,6 @@ const updateSupplier = ({ suppliersDb, updateSupplier_ENTITY }) => {
     let prompt = res
       ? "Supplier updated succesfully!"
       : "Failed to update supplier.";
-
     return {
       message: prompt,
       product: [result],

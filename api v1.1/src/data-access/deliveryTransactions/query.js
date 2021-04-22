@@ -5,7 +5,6 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
     getAllDeliveryTransactions,
     getAllDeliveryByIdTransactions,
     updateDeliveryTransaction,
-    checkDupe,
   });
 
   async function getAllDeliveryTransactions({}) {
@@ -161,28 +160,6 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
       console.log("Error: ", e);
     }
   }
-
-  async function checkDupe({ data }) {
-    try {
-      const pool = await connects();
-
-      const result = await new Promise((resolve) => {
-        const sql = `SELECT * FROM deliveryTransactions WHERE "name" = $1`;
-        let params = [data.name];
-
-        pool.query(sql, params, (err, res) => {
-          pool.end();
-
-          if (err) resolve(err);
-          resolve(res);
-        });
-      });
-      return result;
-    } catch (e) {
-      console.log("Error: ", e);
-    }
-  }
-
   async function updateDeliveryTransaction({ data }) {
     var finalResult = [];
     try {

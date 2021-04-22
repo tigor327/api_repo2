@@ -9,8 +9,7 @@ const updateSalesTransaction = ({
     let day = today.getDate();
 
     let hour = today.getHours();
-    let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
-
+    let min = today.getMinutes();
     let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
 
     let data = await updateSalesTransaction_ENTITY({ info });
@@ -23,11 +22,16 @@ const updateSalesTransaction = ({
     };
 
     const res = await salesTransactionsDb.updateSalesTransaction({ data });
+    console.log(
+      "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^: ",
+      res
+    );
     let prompt = "";
-    if (res.finalResult.length >= 2) {
+    if (res) {
       prompt = "SalesTransactions updated succesfully!";
     } else {
       prompt = "Failed to update salesTransaction.";
+      throw new Error(prompt);
     }
 
     return {

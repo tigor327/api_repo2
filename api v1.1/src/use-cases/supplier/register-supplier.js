@@ -28,7 +28,6 @@ const registerSupplier = ({ suppliersDb, makeSupplier_ENTITY }) => {
 
     return {
       message: prompt,
-      product: { result },
     };
   };
 };

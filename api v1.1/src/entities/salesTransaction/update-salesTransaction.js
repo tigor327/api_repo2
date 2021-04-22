@@ -14,7 +14,7 @@ const updateSalesTransaction = ({ info }) => {
   if (!info) {
     throw new Error("Missing inputs or Incorect Format");
   }
-  if (!info.itemsList.length < 1) {
+  if (info.itemsList.length < 1) {
     throw new Error("No items added");
   }
 

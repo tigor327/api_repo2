@@ -21,7 +21,6 @@ const makeCustomer = ({ info }) => {
   if (!userContact || userContact.trim().length === 0) {
     throw new Error("Please enter contact information");
   }
-
   if (!fname) {
     throw new Error("Invalid chars aren't allowed as name!");
   }

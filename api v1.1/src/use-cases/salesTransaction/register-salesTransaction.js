@@ -9,7 +9,7 @@ const registerSalesTransaction = ({
     let day = today.getDate();
 
     let hour = today.getHours();
-    let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+    let min = today.getMinutes();
 
     let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
     let data = await makeSalesTransaction_ENTITY({ info });
@@ -25,36 +25,39 @@ const registerSalesTransaction = ({
     };
 
     const result = await salesTransactionsDb.addSalesTransaction({ data });
-
-    let finalResult = [];
-    finalResult.push([
-      {
-        deliveryTransactionId: result.finalResult[0][0].transactionid,
-      },
-    ]);
-    const itemsList = result.finalResult;
-
-    for (var n = 1; n < itemsList.length; n++) {
-      finalResult.push(itemsList[n]);
-      n += 1;
+    console.log(result);
+    let prompt;
+    if (result.finalResult.length > 0) {
+      let finalResult = [];
       finalResult.push([
         {
-          id: itemsList[n][0].itemid,
-          name: itemsList[n][0].itemName,
-          price: itemsList[n][0].itemPrice,
-          quantity: itemsList[n][0].itemQuantity,
-          subtotal: itemsList[n][0].subTotal,
+          deliveryTransactionId: result.finalResult[0][0].transactionid,
         },
       ]);
-    }
-    let prompt = result
-      ? "SalesTransaction registered succesfully!"
-      : "Failed to register SalesTransaction.";
+      const itemsList = result.finalResult;
 
-    return {
-      message: prompt,
-      product: { finalResult },
-    };
+      for (var n = 1; n < itemsList.length; n++) {
+        finalResult.push(itemsList[n]);
+        n += 1;
+        finalResult.push([
+          {
+            id: itemsList[n][0].itemid,
+            name: itemsList[n][0].itemName,
+            price: itemsList[n][0].itemPrice,
+            quantity: itemsList[n][0].itemQuantity,
+            subtotal: itemsList[n][0].subTotal,
+          },
+        ]);
+      }
+      prompt = "SalesTransaction registered succesfully!";
+
+      return {
+        message: prompt,
+        product: { finalResult },
+      };
+    } else {
+      throw new Error("Failed to register SalesTransaction.");
+    }
   };
 };
 

@@ -4,10 +4,15 @@ const removeSalesTransaction = ({ salesTransactionsDb }) => {
 
     // delete query
     const res = await salesTransactionsDb.removeSalesTransaction({ id });
-    let msg = `SalesTransaction was not deleted, please try again`;
-    if (res == 1) msg = `SalesTransaction deleted successfully.`;
+
+    let msg;
+    if (res == 1) {
+      msg = `SalesTransaction deleted successfully.`;
+    } else {
+      throw new Error(`SalesTransaction was not deleted, please try again`);
+    }
     return msg;
   };
 };
-
+`SalesTransaction was not deleted, please try again`;
 module.exports = removeSalesTransaction;

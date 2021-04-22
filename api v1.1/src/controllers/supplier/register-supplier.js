@@ -7,11 +7,12 @@ const registerSuppliers = ({ registerSupplierUseCase }) => {
       const { source = {}, ...info } = httpRequest.body;
       source.ip = httpRequest.ip;
       source.browser = httpRequest.headers["User-Agent"];
-      if (httpRequest.headers["Referer"]) {
-        source.referrer = httpRequest.headers["Referer"];
-      }
       const toView = { ...info, source };
       const result = await registerSupplierUseCase(toView);
+      console.log(
+        "===============================================================================================================: ",
+        result
+      );
       return {
         headers: {
           "Content-Type": "application/json",

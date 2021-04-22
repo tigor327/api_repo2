@@ -4,10 +4,18 @@
   "description": "api project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest test --runInBand --detectOpenHandles --coverage",
     "start": "nodemon src/app",
     "utest": "jest src/tests/unit-test --detectOpenHandles --forceExit",
-    "itest": "jest src/tests/integration-test/employees.test.js --detectOpenHandles --forceExit"
+    "itest": "jest src/tests/integration-test/employees.test.js --detectOpenHandles --forceExit",
+    "test_suppliers": "jest src/tests/integration-test/supplier.test.js --runInBand --detectOpenHandles --coverage",
+    "test_customers": "jest src/tests/integration-test/customer.test.js --runInBand --detectOpenHandles --coverage",
+    "test_deliveryTransactions": "jest src/tests/integration-test/deliveryTransaction.test.js --runInBand --detectOpenHandles --coverage",
+    "test_items": "jest src/tests/integration-test/item.test.js --runInBand --detectOpenHandles --coverage",
+    "test_login": "jest src/tests/integration-test/login.test.js --runInBand --detectOpenHandles --coverage",
+    "test_salesTransaction": "jest src/tests/integration-test/salesTransaction.test.js --runInBand --detectOpenHandles --coverage"
+
+
   },
   "author": "Michael Angelo Ruiter",
   "license": "MIT",

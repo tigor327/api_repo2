@@ -12,11 +12,16 @@ const registerDeliveryTransactions = ({
       source.browser = httpRequest.headers["User-Agent"];
       const toView = { ...info, source };
       const result = await registerDeliveryTransactionUseCase(toView);
+      console.log(
+        "-1-1-1-1-1-1-1-1111-1-1-1-1-1-1-1-1------------------------------------------:",
+        result
+      );
       return {
         headers: {
           "Content-Type": "application/json",
         },
         statusCode: 201,
+
         body: { result },
       };
     } catch (e) {

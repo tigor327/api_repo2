@@ -46,6 +46,104 @@ describe(`Tests Suites`, () => {
         expect(response.statusCode).toBe(403);
       });
     });
+
+    describe("POST /customers/list", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName: "joaquin mas",
+            custContact: "619",
+            custAddress: "5 Kings Place",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(201);
+      });
+    });
+
+    describe("POST /customers/list  Please enter full name", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custContact: "619",
+            custAddress: "5 Kings Place",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Please enter full name");
+      });
+    });
+
+    describe("POST /customers/list  Please enter address", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName: "joaquin",
+            custContact: "619",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Please enter address");
+      });
+    });
+
+    describe("POST /customers/list Please enter contact information", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName: "joaquin",
+            custAddress: "5 Kings Place",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Please enter contact information");
+      });
+    });
+
+    describe("POST /customers/list Invalid chars aren't allowed as name!", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName: "joaq123uin",
+            custContact: "619",
+            custAddress: "5 Kings Place",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe(
+          "Invalid chars aren't allowed as name!"
+        );
+      });
+    });
+
     describe("POST /customers/list", function() {
       it("responds with json", async () => {
         const response = await request(app)
@@ -62,6 +160,43 @@ describe(`Tests Suites`, () => {
         console.log("response status: ", response.status);
 
         expect(response.statusCode).toBe(201);
+      });
+    });
+    describe("POST /customers/list", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName:
+              "asdasdasdasdaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasd",
+            custContact: "619",
+            custAddress: "5 Kings Place",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Failed to register customer.");
+      });
+    });
+    describe("POST /customers/list", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/customers/list/")
+          .send({
+            custName: "joaquin",
+            custContact: "619",
+            custAddress: "5 Kings Place",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Name already exists");
       });
     });
     describe("PATCH /customers/list", function() {
@@ -85,6 +220,66 @@ describe(`Tests Suites`, () => {
         );
       });
     });
+    describe("PATCH /customers/list no cust status", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .patch("/customers/list/5")
+          .send({
+            custName: "jo123ker",
+            custContact: "80085",
+            custAddress: "5 men's Palace",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe(
+          "Invalid chars aren't allowed as name"
+        );
+      });
+    });
+    describe("PATCH /customers/list no cust status", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .patch("/customers/list/5")
+          .send({
+            custName: "joker",
+            custContact: "80085",
+            custAddress: "5 men's Palace",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(201);
+        expect(response.body.result.message).toBe(
+          "Customer updated succesfully!"
+        );
+      });
+    });
+    describe("PATCH /customers/list", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .patch("/customers/list/5")
+          .send({
+            custName:
+              "asdaafasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadf",
+            custContact: "80085",
+            custAddress: "5 men's Palace",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Failed to update customer.");
+      });
+    });
     describe("DELETE /customers/list", function() {
       it("responds with json", async () => {
         const response = await request(app)
@@ -100,6 +295,24 @@ describe(`Tests Suites`, () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.removeCustomers).toBe(
           "Customer deleted successfully."
+        );
+      });
+    });
+    describe("DELETE /customers/list non-existing id", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .delete("/customers/list/50")
+          .send({
+            custName: "joker",
+            custContact: "80085",
+            custAddress: "5 men's Palace",
+            custStatus: "Active",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        expect(response.statusCode).toBe(200);
+        expect(response.body.removeCustomers).toBe(
+          "Customer was not deleted, please try again"
         );
       });
     });

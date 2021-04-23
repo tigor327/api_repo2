@@ -3,10 +3,8 @@ const salesTransactionRouter = express.Router();
 const makeExpressCallback = require("../../controllers/express-callback/index");
 
 const salesTransactionRoutes = require("./route");
-const tokenAuth = require("../../middleware/tokenValidation/tokenAuthentication");
 
 const salesTransactionRoute = salesTransactionRoutes({
-  tokenAuth,
   salesTransactionRouter,
   makeExpressCallback,
 });

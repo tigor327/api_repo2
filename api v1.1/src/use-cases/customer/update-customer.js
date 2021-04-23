@@ -8,10 +8,13 @@ const updateCustomer = ({ customersDb, updateCustomer_ENTITY }) => {
       custContact: info.custContact,
       custAddress: info.custAddress,
       custStatus: info.custStatus,
+      password: info.password,
       id: info.id,
     };
 
     const res = await customersDb.updateCustomer({ data });
+    console.log("res????????????????????????", res);
+
     if (res) {
       customer.custid = res[0].userid;
       customer.custName = res[0].userName;
@@ -21,14 +24,16 @@ const updateCustomer = ({ customersDb, updateCustomer_ENTITY }) => {
       customer.userTypeId = res[0].userTypeId;
     }
     result.push(customer);
-    let prompt = res
-      ? "Customer updated succesfully!"
-      : "Failed to update customer.";
-
-    return {
-      message: prompt,
-      product: result,
-    };
+    let prompt;
+    if (res !== undefined) {
+      prompt = "Customer updated succesfully!";
+      return {
+        message: prompt,
+        product: result,
+      };
+    } else {
+      throw new Error("Failed to update customer.");
+    }
   };
 };
 

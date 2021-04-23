@@ -10,6 +10,7 @@ const CustomerModel = db.define(
     userAddress: { type: DataTypes.STRING },
     userStatus: { type: DataTypes.STRING },
     userTypeId: { type: DataTypes.INTEGER },
+    password: { type: DataTypes.STRING },
   },
   { freezeTableName: true, timestamps: false, tableName: "users" }
 );

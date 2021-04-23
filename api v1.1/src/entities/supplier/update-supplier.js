@@ -5,10 +5,6 @@ const update = ({ info }) => {
   const { supName, supContact, supAddress, id } = info;
   const fname = isValidName(supName);
   const supStatus = "Active";
-
-  if (!id) {
-    throw new Error("Invalid supplier id");
-  }
   if (!supName) {
     throw new Error("Please enter full name");
   }

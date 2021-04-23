@@ -9,10 +9,11 @@ const registerDeliveryTransaction = ({
     let day = today.getDate();
 
     let hour = today.getHours();
-    let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+    let min = today.getMinutes();
 
     let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
     let data = await makeDeliveryTransaction_ENTITY({ info });
+    let prompt;
 
     const deliveryDate = info.deliveryDate;
     const userName = info.supName;
@@ -29,42 +30,42 @@ const registerDeliveryTransaction = ({
     const result = await deliveryTransactionsDb.addDeliveryTransaction({
       data,
     });
-    let finalResult = [];
-    finalResult.push([
-      {
-        deliveryTransactionId: result.finalResult[0][0].transactionid,
-      },
-    ]);
-    const itemsList = result.finalResult[1];
     console.log(
-      "result from await",
-      result.finalResult[0][0].transactionid,
-      "loop number: ",
-      n
+      "====================================================: ",
+      result
     );
 
-    for (var n = 0; n < itemsList.length; n++) {
-      finalResult.push(itemsList[n]);
-      n += 1;
-
+    if (result.finalResult[0] !== undefined) {
+      let finalResult = [];
       finalResult.push([
         {
-          id: itemsList[n][0].itemid,
-          name: itemsList[n][0].itemName,
-          price: itemsList[n][0].itemPrice,
-          quantity: itemsList[n][0].itemQuantity,
-          subtotal: itemsList[n][0].subTotal,
+          deliveryTransactionId: result.finalResult[0][0].transactionid,
         },
       ]);
-    }
-    let prompt = result
-      ? "DeliveryTransaction registered succesfully!"
-      : "Failed to register deliveryTransaction.";
+      const itemsList = result.finalResult[1];
 
-    return {
-      message: prompt,
-      product: { finalResult },
-    };
+      for (var n = 0; n < itemsList.length; n++) {
+        finalResult.push(itemsList[n]);
+        n += 1;
+
+        finalResult.push([
+          {
+            id: itemsList[n][0].itemid,
+            name: itemsList[n][0].itemName,
+            price: itemsList[n][0].itemPrice,
+            quantity: itemsList[n][0].itemQuantity,
+            subtotal: itemsList[n][0].subTotal,
+          },
+        ]);
+      }
+      prompt = "DeliveryTransaction registered succesfully!";
+      return {
+        message: prompt,
+        product: { finalResult },
+      };
+    } else {
+      throw new Error("Failed to register deliveryTransaction.");
+    }
   };
 };
 

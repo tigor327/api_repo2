@@ -14,6 +14,7 @@ const registerSalesTransaction = ({
     let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
     let data = await makeSalesTransaction_ENTITY({ info });
 
+    console.log("info0123-0==--------------------------------", info);
     const custName = info.custName;
     const items = info.itemsList;
     const transactionTotal = info.grandTotal;

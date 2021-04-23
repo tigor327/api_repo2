@@ -24,13 +24,13 @@ const makeItem = ({ info }) => {
     quantity = 0;
   }
   if (isNaN(quantity)) {
-    throw new Error("Quantity has to be a number!");
+    throw new Error("Quantity has to be a number!"); //27
   }
   if (!price) {
     throw new Error("Item price can't be blank!");
   }
   if (isNaN(price)) {
-    throw new Error("Item price has to be a number!");
+    throw new Error("Item price has to be a number!"); //33
   }
 
   return Object.freeze({

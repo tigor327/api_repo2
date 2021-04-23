@@ -5,7 +5,7 @@ const updateDeliveryTransaction = ({ info }) => {
   let day = today.getDate();
 
   let hour = today.getHours();
-  let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+  let min = today.getMinutes();
 
   let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
   const userName = info.supName;
@@ -27,13 +27,13 @@ const updateDeliveryTransaction = ({ info }) => {
     throw new Error("Please enter deliveryDate");
   }
 
-  return Object.freeze({
-    userName: () => userName,
-    totalPrice: () => totalPrice,
-    items: () => items,
-    dateAndTime: () => dateAndTime,
-    deliveryDate: () => deliveryDate,
-  });
+  // return Object.freeze({
+  //   userName: () => userName,
+  //   totalPrice: () => totalPrice,
+  //   items: () => items,
+  //   dateAndTime: () => dateAndTime,
+  //   deliveryDate: () => deliveryDate,
+  // });
 };
 
 module.exports = updateDeliveryTransaction;

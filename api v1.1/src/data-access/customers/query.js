@@ -56,6 +56,7 @@ const customerQuery = ({ connects, model }) => {
         userAddress: data.userAddress,
         userStatus: "Active",
         userTypeId: 3,
+        password: "default",
       });
 
       return result.dataValues;
@@ -66,6 +67,8 @@ const customerQuery = ({ connects, model }) => {
 
   async function updateCustomer({ data }) {
     let checkExist = await getCustomerById({ data });
+    console.log("password??: ", data);
+    //return message can be more specific by creating string and adding property names that were not 'undefined' to the said string.
     if (checkExist) {
       try {
         const Customer = model.CustomerModel;
@@ -75,6 +78,7 @@ const customerQuery = ({ connects, model }) => {
             userContact: data.custContact,
             userAddress: data.custAddress,
             userStatus: data.custStatus,
+            password: data.password,
           },
           {
             where: { userid: data.id },

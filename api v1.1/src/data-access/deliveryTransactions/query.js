@@ -83,13 +83,14 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
           data.totalPrice,
           "delivery",
         ];
-
         pool.query(sql, params, (err, res) => {
           pool.end();
           if (err) resolve(err);
           resolve(res);
         });
       });
+      console.log("data inside query===================: ", result);
+
       transactionId.push(result.rows);
 
       //add items delivered to itemDeliveries table
@@ -182,8 +183,11 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
           resolve(res);
         });
       });
-
-      if (result) {
+      console.log(
+        "res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1res1: ",
+        result.r
+      );
+      if (result.rowCount > 0) {
         try {
           const pool = await connects();
           for (var i = 0; i < data.items.length; i++) {
@@ -196,12 +200,14 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
                 data.id,
                 data.items[i].subTotal,
               ];
+
               pool.query(sql, params, (err, res) => {
                 //pool.end();
                 if (err) resolve(err);
                 resolve(res);
               });
             });
+
             finalResult.push(result1.command, result1.rows);
 
             try {
@@ -247,6 +253,8 @@ const deliveryTransactionsQuery = ({ connects, model }) => {
         } catch (e) {
           console.log("Error: ", e);
         }
+      } else {
+        throw new Error("Failed to update deliveryTransaction.");
       }
     } catch (e) {
       console.log("Error: ", e);

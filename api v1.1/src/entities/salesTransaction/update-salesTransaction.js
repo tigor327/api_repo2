@@ -8,36 +8,31 @@ const updateSalesTransaction = ({ info }) => {
   let day = today.getDate();
 
   let hour = today.getHours();
-  let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+  let min = today.getMinutes();
   let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
+  console.log("info:-- ", info);
 
-  if (!info) {
-    throw new Error("Missing inputs or Incorect Format");
-  }
-  if (info.itemsList.length < 1) {
+  if (!info.itemsList || info.itemsList.length < 1) {
     throw new Error("No items added");
   }
 
-  const custName = info.custName;
+  let custName = info.custName;
   const items = info.itemsList;
   const totalPrice = info.grandTotal;
   if (!custName) {
     custName = "Unregistered Customer";
   }
 
-  if (!items) {
-    throw new Error("Invalid chars aren't allowed as name");
-  }
   if (!totalPrice) {
-    throw new Error("Invalid chars aren't allowed as name");
+    throw new Error("No Grand Total Added.");
   }
 
-  return Object.freeze({
-    custName: () => custName,
-    total: () => total,
-    items: () => items,
-    dateAndTime: () => dateAndTime,
-  });
+  // return Object.freeze({
+  //   custName: () => custName,
+  //   total: () => total,
+  //   items: () => items,
+  //   dateAndTime: () => dateAndTime,
+  // });
 };
 
 module.exports = updateSalesTransaction;

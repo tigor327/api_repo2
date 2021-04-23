@@ -11,9 +11,10 @@ const updateItem_ENTITY = ({ info }) => {
     itemStatus,
     id,
   } = info;
-  if (!id) {
-    throw new Error("please provide id");
-  }
+  console.log(
+    quantity,
+    "sadlfkjasdklghsdfipghapdg=-------------------------------------------------------"
+  );
   if (!name) {
     throw new Error("Item name can't be blank!");
   }

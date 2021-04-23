@@ -100,6 +100,23 @@ describe(`Tests Suites`, () => {
         );
       });
     });
+    describe("POST /transaction/sales no items added", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/transaction/sales")
+          .send({
+            grandTotal: 3000,
+            custName: "Unregistered Customer",
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("No items added!");
+      });
+    });
     describe("POST /transaction/sales", function() {
       it("responds with json", async () => {
         const response = await request(app)
@@ -133,6 +150,72 @@ describe(`Tests Suites`, () => {
         expect(response.statusCode).toBe(201);
       });
     });
+    describe("POST /transaction/sales no custName", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/transaction/sales")
+          .send({
+            grandTotal: 3000,
+
+            itemsList: [
+              {
+                id: 1,
+                name: "item1",
+                selectedQuantity: 10,
+                price: 10,
+                subTotal: 100,
+              },
+              {
+                id: 2,
+                name: "item2",
+                selectedQuantity: 10,
+                price: 20,
+                subTotal: 200,
+              },
+            ],
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(201);
+      });
+    });
+    describe("POST /transaction/sales no custName", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .post("/transaction/sales")
+          .send({
+            custName: "Unregistered Customer",
+
+            itemsList: [
+              {
+                id: 1,
+                name: "item1",
+                selectedQuantity: 10,
+                price: 10,
+                subTotal: 100,
+              },
+              {
+                id: 2,
+                name: "item2",
+                selectedQuantity: 10,
+                price: 20,
+                subTotal: 200,
+              },
+            ],
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("Please enter grand total.");
+      });
+    });
+
     describe("PATCH /transaction/sales/5", function() {
       it("responds with json", async () => {
         const response = await request(app)
@@ -172,6 +255,24 @@ describe(`Tests Suites`, () => {
     describe("PATCH /transaction/sales/5", function() {
       it("responds with json", async () => {
         const response = await request(app)
+          .patch("/transaction/sales/5")
+          .send({
+            grandTotal: 3000,
+            custName: "Unregistered Customer",
+
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("No items added");
+      });
+    });
+    describe("PATCH /transaction/sales/5 invalid id", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
           .patch("/transaction/sales/10")
           .send({
             grandTotal: 3000,
@@ -201,6 +302,71 @@ describe(`Tests Suites`, () => {
 
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Failed to update salesTransaction.");
+      });
+    });
+    describe("PATCH /transaction/sales/5 no custName", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .patch("/transaction/sales/5")
+          .send({
+            grandTotal: 3000,
+
+            itemsList: [
+              {
+                id: 1,
+                name: "item1",
+                selectedQuantity: 20,
+                price: 10,
+                subTotal: 200,
+              },
+              {
+                id: 2,
+                name: "item2",
+                selectedQuantity: 20,
+                price: 20,
+                subTotal: 400,
+              },
+            ],
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(201);
+      });
+    });
+    describe("PATCH /transaction/sales/5 no custName", function() {
+      it("responds with json", async () => {
+        const response = await request(app)
+          .patch("/transaction/sales/5")
+          .send({
+            custName: "Unregistered Customer",
+
+            itemsList: [
+              {
+                id: 1,
+                name: "item1",
+                selectedQuantity: 20,
+                price: 10,
+                subTotal: 200,
+              },
+              {
+                id: 2,
+                name: "item2",
+                selectedQuantity: 20,
+                price: 20,
+                subTotal: 400,
+              },
+            ],
+            token:
+              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+          });
+        console.log("response body: ", response.body);
+        console.log("response status: ", response.status);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe("No Grand Total Added.");
       });
     });
     describe("DELETE /transaction/sales", function() {

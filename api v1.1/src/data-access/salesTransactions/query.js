@@ -61,6 +61,7 @@ const salesTransactionsQuery = ({ connects, model }) => {
             resolve(res);
           });
         });
+        console.log("resultid:== ", data);
 
         //add to salesTransaction Table
         const result = await new Promise((resolve) => {
@@ -77,6 +78,7 @@ const salesTransactionsQuery = ({ connects, model }) => {
             resolve(res);
           });
         });
+
         if (result.rows) {
           console.log("hmmmmmmm: ", result.rows);
           finalResult.push(result.rows);

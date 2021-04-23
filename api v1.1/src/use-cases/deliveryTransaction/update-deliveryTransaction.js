@@ -9,7 +9,7 @@ const updateDeliveryTransactions = ({
     let day = today.getDate();
 
     let hour = today.getHours();
-    let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+    let min = today.getMinutes();
 
     let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
     let data = await updateDeliveryTransaction_ENTITY({ info });
@@ -31,17 +31,18 @@ const updateDeliveryTransactions = ({
     const res = await deliveryTransactionsDb.updateDeliveryTransaction({
       data,
     });
-    let prompt = "";
-    if (res.res == 1) {
-      prompt = "DeliveryTransactions updated succesfully!";
-    } else {
-      prompt = "Failed to update deliveryTransaction.";
-    }
 
-    return {
-      message: prompt,
-      product: res,
-    };
+    let prompt;
+
+    if (res !== undefined) {
+      prompt = "DeliveryTransactions updated succesfully!";
+      return {
+        message: prompt,
+        product: res,
+      };
+    } else {
+      throw new Error("Failed to update deliveryTransaction.");
+    }
   };
 };
 

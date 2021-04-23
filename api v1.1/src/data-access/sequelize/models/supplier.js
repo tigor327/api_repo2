@@ -10,6 +10,7 @@ const SupplierModel = db.define(
     userAddress: DataTypes.STRING,
     userStatus: DataTypes.STRING,
     userTypeId: DataTypes.INTEGER,
+    password: DataTypes.STRING,
   },
   { freezeTableName: true, timestamps: false, tableName: "users" }
 );

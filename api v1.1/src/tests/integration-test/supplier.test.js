@@ -205,6 +205,7 @@ describe(`Tests Suites`, () => {
         expect(response.statusCode).toBe(404);
       });
     });
+
     describe("Patch /suppliers/list no supName", function() {
       it("responds with json", async () => {
         const response = await request(app)

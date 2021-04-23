@@ -14,22 +14,26 @@ const registerCustomer = ({ customersDb, makeCustomer_ENTITY }) => {
     }
 
     const res = await customersDb.addCustomer({ data });
-    if (res) {
+    console.log(
+      "===============================================================================: ",
+      res
+    );
+    let prompt;
+    if (res !== undefined) {
       customer.custid = res.userid;
       customer.custName = res.userName;
       customer.custContact = res.userContact;
       customer.custAddress = res.userAddress;
       customer.custStatus = res.userStatus;
       customer.userTypeId = res.userTypeId;
+      prompt = "Customer registered succesfully!";
+      return {
+        message: prompt,
+        result: customer,
+      };
+    } else {
+      throw new Error("Failed to register customer.");
     }
-
-    let prompt = res
-      ? "Customer registered succesfully!"
-      : "Failed to register customer.";
-    return {
-      message: prompt,
-      result: customer,
-    };
   };
 };
 

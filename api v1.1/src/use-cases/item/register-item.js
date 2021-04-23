@@ -22,6 +22,8 @@ const registerItem = ({ itemsDb, makeItem_ENTITY }) => {
     }
 
     const res = await itemsDb.addItem({ data });
+    let prompt;
+    console.log(res);
     if (res) {
       result.id = res.itemid;
       result.name = res.itemName;
@@ -31,15 +33,14 @@ const registerItem = ({ itemsDb, makeItem_ENTITY }) => {
       result.price = res.itemPrice;
       result.quantity = res.itemQuantity;
       result.itemStatus = res.itemStatus;
+      promt = "Item registered succesfully!";
+      return {
+        message: prompt,
+        product: { result },
+      };
+    } else {
+      throw new Error("Failed to register item.");
     }
-    let prompt = res
-      ? "Item registered succesfully!"
-      : "Failed to register item.";
-
-    return {
-      message: prompt,
-      product: { result },
-    };
   };
 };
 

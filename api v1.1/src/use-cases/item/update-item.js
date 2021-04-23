@@ -28,14 +28,13 @@ const updateItem = ({ itemsDb, updateItem_ENTITY }) => {
 
     if (res) {
       prompt = "Item updated succesfully!";
+      return {
+        message: prompt,
+        product: [result],
+      };
     } else {
-      prompt = "Failed to update item.";
+      throw new Error("Failed to update item.");
     }
-
-    return {
-      message: prompt,
-      product: [result],
-    };
   };
 };
 

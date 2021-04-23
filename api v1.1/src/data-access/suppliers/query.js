@@ -75,6 +75,7 @@ const supplierQuery = ({ connects, model }) => {
               userContact: data.supContact,
               userAddress: data.supAddress,
               userStatus: data.supStatus,
+              password: data.password,
             },
             {
               where: { userid: data.id },

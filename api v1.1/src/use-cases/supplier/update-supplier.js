@@ -7,6 +7,7 @@ const updateSupplier = ({ suppliersDb, updateSupplier_ENTITY }) => {
       supContact: info.supContact,
       supAddress: info.supAddress,
       supStatus: info.supStatus,
+      password: info.password,
       id: info.id,
     };
 

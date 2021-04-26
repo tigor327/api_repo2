@@ -8,7 +8,7 @@ const makeDeliveryTransaction = ({ info }) => {
   let day = today.getDate();
 
   let hour = today.getHours();
-  let min = today.getMinutes() < 10 ? "0" : "" + today.getMinutes();
+  let min = today.getMinutes();
 
   let dateAndTime = `${month}-${day}-${year} ${hour}:${min}`;
 

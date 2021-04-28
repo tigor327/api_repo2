@@ -10,8 +10,11 @@ const login = ({ loginDb, makeLogin_ENTITY }) => {
     };
 
     const res = await loginDb.getLogin({ data });
+    console.log("=====================================: res: ", res.rows[0]);
     if (res.rows.length == 1) {
-      token = jwt.sign(res.rows[0].userName, config.development.JWTSecret);
+      let rows = res.rows[0];
+      let user = { username: rows.userName };
+      token = jwt.sign(user, config.development.JWTSecret);
       data.token = token;
       var result = await loginDb.addToken({ data });
     }

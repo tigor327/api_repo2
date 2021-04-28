@@ -10,6 +10,13 @@ describe(`Tests Suites`, () => {
 
   beforeAll(() => {});
 
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
   afterEach(() => {
     app.close();
   });
@@ -29,6 +36,7 @@ describe(`Tests Suites`, () => {
           });
         expect(response.statusCode).toBe(200);
         // expect(response.body.token).toBeTruthy();
+        console.log(response.body);
       });
     });
     describe("POST with credentials /login", function() {
@@ -89,8 +97,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/customers/list")
           .set({
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
       });
@@ -104,8 +111,7 @@ describe(`Tests Suites`, () => {
             Authorization:
               "Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h",
           });
-        expect(response.statusCode).toBe(200);
-        expect(response.body.success).toBe(false);
+        expect(response.statusCode).toBe(403);
       });
     });
   });

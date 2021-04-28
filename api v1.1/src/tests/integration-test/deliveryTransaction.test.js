@@ -10,6 +10,14 @@ describe(`Tests Suites`, () => {
 
   beforeAll(() => {});
 
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
+
   afterEach(() => {
     app.close();
   });
@@ -43,8 +51,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 2000,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -76,8 +83,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 2000,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -94,8 +100,7 @@ describe(`Tests Suites`, () => {
             grandTotal: 99999999,
             supName: "Unregistered Supplier",
             deliveryDate: "04-20-2021",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -127,8 +132,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 2000,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -142,7 +146,7 @@ describe(`Tests Suites`, () => {
     //       .post("/transaction/delivery/")
     //       .set(
     //         "token",
-    //         "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k"
+    //         token
     //       );
     //     console.log("response body: ", response.body);
     //     console.log("response status: ", response.status);
@@ -160,8 +164,7 @@ describe(`Tests Suites`, () => {
             supName: "Unregistered Supplier",
             deliveryDate: "04-20-2021",
 
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -193,8 +196,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 2000,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -226,8 +228,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 2000,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -240,8 +241,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/delivery/1")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -253,8 +253,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/delivery/12")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -267,8 +266,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/delivery/")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -301,8 +299,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 1800,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -342,8 +339,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 1800,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -378,8 +374,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 1800,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -412,8 +407,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 1800,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -431,8 +425,7 @@ describe(`Tests Suites`, () => {
             supName: "Unregistered Supplier",
             deliveryDate: "04-20-2021",
 
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -465,8 +458,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 1800,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -480,8 +472,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/transaction/delivery/5")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeDeliveryTransactions).toBe(
@@ -494,8 +485,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/transaction/delivery/10")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeDeliveryTransactions).toBe(

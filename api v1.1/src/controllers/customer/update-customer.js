@@ -4,6 +4,8 @@ const updateCustomerById = ({ updateCustomerUseCase }) => {
       "Content-Type": "application/json",
     };
     try {
+      console.log("HTTP REQUEST: ", httpRequest);
+
       const { source = {}, ...info } = httpRequest.body;
       source.ip = httpRequest.ip;
       source.browser = httpRequest.headers["User-Agent"];

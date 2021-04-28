@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 var server = app.listen(port);
-app.use("/customers/list", validateToken, customerRoute);
+app.use("/customers/list", customerRoute);
 app.use("/suppliers/list", validateToken, supplierRoute);
 app.use("/items/list", validateToken, itemRoute);
 app.use("/transaction/sales", validateToken, salesTransactionRoute);

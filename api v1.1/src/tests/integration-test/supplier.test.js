@@ -10,6 +10,14 @@ describe(`Tests Suites`, () => {
 
   beforeAll(() => {});
 
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
+
   afterEach(() => {
     app.close();
   });
@@ -26,8 +34,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/suppliers/list/")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(200);
@@ -38,8 +45,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/suppliers/list/4")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log(
           "-----------------------------------------------------------------------------------------------------------------------------",
@@ -56,8 +62,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/suppliers/list/")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.body.error).toBe("No Suppliers Found.");
@@ -74,8 +79,7 @@ describe(`Tests Suites`, () => {
             supContact: "00000000",
             supAddress: "No Address",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(201);
@@ -93,8 +97,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(201);
         expect(response.body.result.message).toBe(
@@ -112,8 +115,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(201);
         expect(response.body.result.message).toBe(
@@ -130,8 +132,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(400);
@@ -147,8 +148,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(400);
@@ -166,8 +166,7 @@ describe(`Tests Suites`, () => {
             supContact: "",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(400);
@@ -183,8 +182,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Please enter address");
@@ -199,8 +197,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(404);
       });
@@ -215,8 +212,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Please enter full name");
@@ -231,8 +227,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Please enter address");
@@ -247,8 +242,7 @@ describe(`Tests Suites`, () => {
             supContact: "",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Please enter contact information");
@@ -263,8 +257,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe(
@@ -296,8 +289,7 @@ describe(`Tests Suites`, () => {
             supContact: "619",
             supAddress: "5 Kings Place",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("Name already exists");
@@ -312,8 +304,7 @@ describe(`Tests Suites`, () => {
             supContact: "80085",
             supAddress: "5 men's Palace",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(201);
         expect(response.body.result.message).toBe(
@@ -330,8 +321,7 @@ describe(`Tests Suites`, () => {
             supContact: "80085",
             supAddress: "5 men's Palace",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(201);
         expect(response.body.result.message).toBe("Failed to update supplier.");
@@ -346,8 +336,7 @@ describe(`Tests Suites`, () => {
             supContact: "80085",
             supAddress: "5 men's Palace",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeSuppliers).toBe(
@@ -364,8 +353,7 @@ describe(`Tests Suites`, () => {
             supContact: "80085",
             supAddress: "5 men's Palace",
             supStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe("No Suppliers Found.");

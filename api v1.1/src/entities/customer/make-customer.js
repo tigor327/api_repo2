@@ -8,7 +8,10 @@ const makeCustomer = ({ info }) => {
   const userAddress = info.custAddress;
   var userStatus = info.custStatus;
   const fname = isValidName(userName);
-
+  console.log(
+    "===============================================================================: ",
+    info
+  );
   if (!userStatus) {
     userStatus = "Active";
   }

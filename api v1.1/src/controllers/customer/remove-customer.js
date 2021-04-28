@@ -1,5 +1,6 @@
 const removeCustomerById = ({ removeCustomerUseCase }) => {
   return async function get(httpRequest) {
+    console.log("HTTP REQ: ", httpRequest);
     const headers = {
       "Content-Type": "application/json",
     };

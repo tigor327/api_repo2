@@ -28,26 +28,34 @@ async function validateToken(req, res, next) {
       token = token.split(" ")[1];
     }
     let tok = await tokenDB(token);
+
     console.log("tok FromDB: ", tok.rowCount);
     //may add if statement to verify only if the token is present in the database.
-    jwt.verify(token, config.development.JWTSecret, (err, decoded) => {
-      if (err) {
-        console.log("VALIDATION not valid: ", token);
+    if (tok.rowCount > 0) {
+      console.log("START VERIFICATION");
+      jwt.verify(token, config.development.JWTSecret, (err, decoded) => {
+        if (err) {
+          console.log("VALIDATION not valid: ", token);
 
-        return res.json({
-          success: false,
-          message: "Failed to authenticate token.",
-        });
-      } else {
-        console.log(
-          "token-----------------------------------------------------------------------------------------------token------------------------------------------------------token",
-          dbToken
-        );
+          return res.json({
+            success: false,
+            message: "Failed to authenticate token.",
+          });
+        } else {
+          console.log(
+            "token-----------------------------------------------------------------------------------------------token------------------------------------------------------token",
+            dbToken
+          );
+        }
         console.log("VALIDATION valid: ", token);
         req.decoded = decoded;
         next();
-      }
-    });
+      });
+    } else {
+      return res.status(403).send({
+        message: "FORBIDDEN",
+      });
+    }
   } else {
     return res.status(403).send({
       success: false,

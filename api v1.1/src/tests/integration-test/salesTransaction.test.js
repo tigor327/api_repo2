@@ -10,6 +10,14 @@ describe(`Tests Suites`, () => {
 
   beforeAll(() => {});
 
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
+
   afterEach(() => {
     app.close();
   });
@@ -26,8 +34,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/sales")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -40,8 +47,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/sales/10")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -55,8 +61,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/transaction/sales/3")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -88,8 +93,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 200,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -107,8 +111,7 @@ describe(`Tests Suites`, () => {
           .send({
             grandTotal: 3000,
             custName: "Unregistered Customer",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -141,8 +144,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 200,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -173,8 +175,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 200,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -205,8 +206,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 200,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -240,8 +240,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 400,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -260,8 +259,7 @@ describe(`Tests Suites`, () => {
             grandTotal: 3000,
             custName: "Unregistered Customer",
 
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -294,8 +292,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 400,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -327,8 +324,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 400,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -359,8 +355,7 @@ describe(`Tests Suites`, () => {
                 subTotal: 400,
               },
             ],
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -374,8 +369,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/transaction/sales/5")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeSalesTransactions).toBe(
@@ -388,8 +382,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/transaction/sales/10")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe(

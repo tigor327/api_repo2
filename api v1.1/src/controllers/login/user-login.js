@@ -4,6 +4,7 @@ const login = ({ loginUseCase }) => {
       "Content-Type": "application/json",
     };
     try {
+      console.log("HTTP REQ: ", httpRequest);
       const { source = {}, ...info } = httpRequest.body;
       source.ip = httpRequest.ip;
       source.browser = httpRequest.headers["User-Agent"];

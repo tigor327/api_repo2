@@ -4,9 +4,11 @@
   "description": "api project",
   "main": "app.js",
   "scripts": {
-    "test": "jest test --runInBand --detectOpenHandles --coverage",
+    "test": "jest test --runInBand --detectOpenHandles --coverage --forceExit",
     "start": "nodemon src/app",
-    "utest": "jest src/tests/unit-test --detectOpenHandles --forceExit",
+    "utest": "jest src/tests/unit-test --runInBand --detectOpenHandles --forceExit",
+    "utest_supplier": "jest src/tests/unit-test/use-case-supplier.test.js --runInBand --detectOpenHandles --forceExit",
+
     "itest": "jest src/tests/integration-test/employees.test.js --detectOpenHandles --forceExit",
     "test_suppliers": "jest src/tests/integration-test/supplier.test.js --runInBand --detectOpenHandles --coverage",
     "test_customers": "jest src/tests/integration-test/customer.test.js --runInBand --detectOpenHandles --coverage",

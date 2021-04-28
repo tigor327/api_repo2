@@ -99,6 +99,7 @@ const supplierQuery = ({ connects, model }) => {
       const res = await Supplier.destroy({
         where: {
           userid: id,
+          userTypeId: 4,
         },
       });
       return res;

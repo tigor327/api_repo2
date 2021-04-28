@@ -10,6 +10,14 @@ describe(`Tests Suites`, () => {
 
   beforeAll(() => {});
 
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
+
   afterEach(() => {
     app.close();
   });
@@ -26,8 +34,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/items/list/")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -47,8 +54,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -69,8 +75,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             quantity: 100,
             itemStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -92,8 +97,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -114,8 +118,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -136,8 +139,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -158,8 +160,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -179,8 +180,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -200,8 +200,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             quantity: "abs",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -221,8 +220,7 @@ describe(`Tests Suites`, () => {
             price: "asdf",
             quantity: 300,
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -242,8 +240,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             quantity: 100,
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -263,8 +260,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -285,8 +281,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -307,8 +302,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -329,8 +323,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -351,8 +344,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             quantity: 100,
             itemStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -373,8 +365,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -395,8 +386,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -417,8 +407,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -439,8 +428,7 @@ describe(`Tests Suites`, () => {
             price: 30,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -462,8 +450,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -484,8 +471,7 @@ describe(`Tests Suites`, () => {
             quantity: 100,
             itemStatus: "Active",
             supName: "Unregistered Supplier",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -499,8 +485,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/items/list/3")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeItems).toBe("Item deleted successfully.");
@@ -511,8 +496,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .delete("/items/list/10")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeItems).toBe(

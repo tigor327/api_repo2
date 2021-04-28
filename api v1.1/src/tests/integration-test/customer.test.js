@@ -7,8 +7,13 @@ describe(`Tests Suites`, () => {
   it("has a module", () => {
     expect(app).toBeDefined();
   });
-
-  beforeAll(() => {});
+  let token;
+  beforeEach(async () => {
+    let getTokenRes = await request(app)
+      .post("/login")
+      .send({ userName: "admin", password: "admin" });
+    token = getTokenRes.body.token;
+  });
 
   afterEach(() => {
     app.close();
@@ -28,8 +33,7 @@ describe(`Tests Suites`, () => {
         const response = await request(app)
           .get("/customers/list/")
           .send({
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -55,8 +59,7 @@ describe(`Tests Suites`, () => {
             custName: "joaquin mas",
             custContact: "619",
             custAddress: "5 Kings Place",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -73,8 +76,7 @@ describe(`Tests Suites`, () => {
             custContact: "619",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -92,8 +94,7 @@ describe(`Tests Suites`, () => {
             custName: "joaquin",
             custContact: "619",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -111,8 +112,7 @@ describe(`Tests Suites`, () => {
             custName: "joaquin",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -131,8 +131,7 @@ describe(`Tests Suites`, () => {
             custContact: "619",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -153,8 +152,7 @@ describe(`Tests Suites`, () => {
             custContact: "619",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -172,8 +170,7 @@ describe(`Tests Suites`, () => {
             custContact: "619",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
 
         expect(response.statusCode).toBe(400);
@@ -189,8 +186,7 @@ describe(`Tests Suites`, () => {
             custContact: "619",
             custAddress: "5 Kings Place",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -208,8 +204,7 @@ describe(`Tests Suites`, () => {
             custContact: "80085",
             custAddress: "5 men's Palace",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -228,8 +223,7 @@ describe(`Tests Suites`, () => {
             custName: "jo123ker",
             custContact: "80085",
             custAddress: "5 men's Palace",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -248,8 +242,7 @@ describe(`Tests Suites`, () => {
             custName: "joker",
             custContact: "80085",
             custAddress: "5 men's Palace",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -270,8 +263,7 @@ describe(`Tests Suites`, () => {
             custContact: "80085",
             custAddress: "5 men's Palace",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         console.log("response body: ", response.body);
         console.log("response status: ", response.status);
@@ -289,8 +281,7 @@ describe(`Tests Suites`, () => {
             custContact: "80085",
             custAddress: "5 men's Palace",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeCustomers).toBe(
@@ -307,8 +298,7 @@ describe(`Tests Suites`, () => {
             custContact: "80085",
             custAddress: "5 men's Palace",
             custStatus: "Active",
-            token:
-              "eyJhbGciOiJIUzI1NiJ9.YWRtaW4.23a2LfcEJ7pbe5mqaW8cJ7kPr_e6jI3JLb9gXSf2h_k",
+            token: token,
           });
         expect(response.statusCode).toBe(200);
         expect(response.body.removeCustomers).toBe(
